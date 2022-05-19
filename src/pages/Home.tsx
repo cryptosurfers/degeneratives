@@ -38,7 +38,7 @@ const ConnectButton = styled(WalletDialogButton)`
   margin-top: 10px;
   margin-bottom: 5px;
   background: linear-gradient(180deg, #604ae5 0%, #813eee 100%);
-  color: white;
+  color: black;
   font-size: 16px;
   font-weight: bold;
 `;
@@ -478,6 +478,7 @@ const Home = (props: HomeProps) => {
 
   return (
     <Container style={{ marginTop: 100 }}>
+      <h1>kekwe</h1>
       <Container maxWidth="xs" style={{ position: 'relative' }}>
         <Paper
           style={{
@@ -704,6 +705,7 @@ const Home = (props: HomeProps) => {
         </Paper>
       </Container>
       <Button
+        style={{ color: 'black' }}
         variant="text"
         onClick={async () => {
           console.log('dc', wallet);
@@ -713,7 +715,7 @@ const Home = (props: HomeProps) => {
       >
         DC
       </Button>
-      \
+
       <Snackbar
         open={alertState.open}
         autoHideDuration={
