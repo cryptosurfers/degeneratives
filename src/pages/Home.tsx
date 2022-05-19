@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import * as anchor from '@project-serum/anchor';
 
 import styled from 'styled-components';
-import { Container, Snackbar } from '@material-ui/core';
+import { Button, Container, Snackbar } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Alert from '@material-ui/lab/Alert';
 import Grid from '@material-ui/core/Grid';
@@ -24,12 +24,12 @@ import {
   getCollectionPDA,
   mintOneToken,
   SetupState,
-} from './candy-machine';
-import { AlertState, formatNumber, getAtaForMint, toDate } from './utils';
-import { MintCountdown } from './MintCountdown';
-import { MintButton } from './MintButton';
+} from '../lib/candy-machine';
+import { AlertState, formatNumber, getAtaForMint, toDate } from '../utils';
+import { MintCountdown } from '../components/MintCountdown';
+import { MintButton } from '../components/MintButton';
 import { GatewayProvider } from '@civic/solana-gateway-react';
-import { sendTransaction } from './connection';
+import { sendTransaction } from '../lib/connection';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 
 const ConnectButton = styled(WalletDialogButton)`
@@ -104,7 +104,7 @@ const Home = (props: HomeProps) => {
           const cndy = await getCandyMachineState(
             anchorWallet,
             props.candyMachineId,
-            connection,
+            connection
           );
           let active =
             cndy?.state.goLiveDate?.toNumber() < new Date().getTime() / 1000;
@@ -138,7 +138,7 @@ const Home = (props: HomeProps) => {
             }
             // retrieves the whitelist token
             const mint = new anchor.web3.PublicKey(
-              cndy.state.whitelistMintSettings.mint,
+              cndy.state.whitelistMintSettings.mint
             );
             const token = (
               await getAtaForMint(mint, anchorWallet.publicKey)
@@ -160,7 +160,7 @@ const Home = (props: HomeProps) => {
                 active = false;
               }
               console.log(
-                'There was a problem fetching whitelist token balance',
+                'There was a problem fetching whitelist token balance'
               );
               console.log(e);
             }
@@ -190,7 +190,7 @@ const Home = (props: HomeProps) => {
             }
           } else {
             const balance = new anchor.BN(
-              await connection.getBalance(anchorWallet.publicKey),
+              await connection.getBalance(anchorWallet.publicKey)
             );
             const valid = balance.gte(userPrice);
             setIsValidBalance(valid);
@@ -211,7 +211,7 @@ const Home = (props: HomeProps) => {
           if (cndy?.state.endSettings?.endSettingType.amount) {
             let limit = Math.min(
               cndy.state.endSettings.number.toNumber(),
-              cndy.state.itemsAvailable,
+              cndy.state.itemsAvailable
             );
             if (cndy.state.itemsRedeemed < limit) {
               setItemsRemaining(limit - cndy.state.itemsRedeemed);
@@ -229,7 +229,7 @@ const Home = (props: HomeProps) => {
 
           const [collectionPDA] = await getCollectionPDA(props.candyMachineId);
           const collectionPDAAccount = await connection.getAccountInfo(
-            collectionPDA,
+            collectionPDA
           );
 
           setIsActive((cndy.state.isActive = active));
@@ -286,12 +286,12 @@ const Home = (props: HomeProps) => {
         });
       }
     },
-    [anchorWallet, props.candyMachineId, props.rpcHost],
+    [anchorWallet, props.candyMachineId, props.rpcHost]
   );
 
   const onMint = async (
     beforeTransactions: Transaction[] = [],
-    afterTransactions: Transaction[] = [],
+    afterTransactions: Transaction[] = []
   ) => {
     try {
       setIsUserMinting(true);
@@ -306,7 +306,7 @@ const Home = (props: HomeProps) => {
           });
           setupMint = await createAccountsForMint(
             candyMachine,
-            wallet.publicKey,
+            wallet.publicKey
           );
           let status: any = { err: true };
           if (setupMint.transaction) {
@@ -314,7 +314,7 @@ const Home = (props: HomeProps) => {
               setupMint.transaction,
               props.txTimeout,
               props.connection,
-              true,
+              true
             );
           }
           if (status && !status.err) {
@@ -347,7 +347,7 @@ const Home = (props: HomeProps) => {
           wallet.publicKey,
           beforeTransactions,
           afterTransactions,
-          setupMint ?? setupTxn,
+          setupMint ?? setupTxn
         );
 
         let status: any = { err: true };
@@ -357,13 +357,13 @@ const Home = (props: HomeProps) => {
             mintResult.mintTxId,
             props.txTimeout,
             props.connection,
-            true,
+            true
           );
 
           metadataStatus =
             await candyMachine.program.provider.connection.getAccountInfo(
               mintResult.metadataKey,
-              'processed',
+              'processed'
             );
           console.log('Metadata status: ', !!metadataStatus);
         }
@@ -526,7 +526,7 @@ const Home = (props: HomeProps) => {
                       {isWhitelistUser && discountPrice
                         ? `◎ ${formatNumber.asNumber(discountPrice)}`
                         : `◎ ${formatNumber.asNumber(
-                            candyMachine.state.price,
+                            candyMachine.state.price
                           )}`}
                     </Typography>
                   </Grid>
@@ -606,8 +606,8 @@ const Home = (props: HomeProps) => {
                     }
                     handleTransaction={async (transaction: Transaction) => {
                       setIsUserMinting(true);
-                      const userMustSign = transaction.signatures.find(sig =>
-                        sig.publicKey.equals(wallet.publicKey!),
+                      const userMustSign = transaction.signatures.find((sig) =>
+                        sig.publicKey.equals(wallet.publicKey!)
                       );
                       if (userMustSign) {
                         setAlertState({
@@ -617,7 +617,7 @@ const Home = (props: HomeProps) => {
                         });
                         try {
                           transaction = await wallet.signTransaction!(
-                            transaction,
+                            transaction
                           );
                         } catch (e) {
                           setAlertState({
@@ -643,7 +643,7 @@ const Home = (props: HomeProps) => {
                           transaction,
                           [],
                           true,
-                          'confirmed',
+                          'confirmed'
                         );
                         setAlertState({
                           open: true,
@@ -670,7 +670,7 @@ const Home = (props: HomeProps) => {
                     <MintButton
                       candyMachine={candyMachine}
                       isMinting={isUserMinting}
-                      setIsMinting={val => setIsUserMinting(val)}
+                      setIsMinting={(val) => setIsUserMinting(val)}
                       onMint={onMint}
                       isActive={
                         isActive ||
@@ -682,7 +682,7 @@ const Home = (props: HomeProps) => {
                   <MintButton
                     candyMachine={candyMachine}
                     isMinting={isUserMinting}
-                    setIsMinting={val => setIsUserMinting(val)}
+                    setIsMinting={(val) => setIsUserMinting(val)}
                     onMint={onMint}
                     isActive={
                       isActive ||
@@ -703,7 +703,17 @@ const Home = (props: HomeProps) => {
           </Typography>
         </Paper>
       </Container>
-
+      <Button
+        variant="text"
+        onClick={async () => {
+          console.log('dc', wallet);
+          console.log('cluster', props.connection);
+          wallet.disconnect();
+        }}
+      >
+        DC
+      </Button>
+      \
       <Snackbar
         open={alertState.open}
         autoHideDuration={
@@ -723,7 +733,7 @@ const Home = (props: HomeProps) => {
 };
 
 const getCountdownDate = (
-  candyMachine: CandyMachineAccount,
+  candyMachine: CandyMachineAccount
 ): Date | undefined => {
   if (
     candyMachine.state.isActive &&
@@ -737,7 +747,7 @@ const getCountdownDate = (
       ? candyMachine.state.goLiveDate
       : candyMachine.state.isPresale
       ? new anchor.BN(new Date().getTime() / 1000)
-      : undefined,
+      : undefined
   );
 };
 
