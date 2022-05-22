@@ -46,7 +46,7 @@ const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST!;
 console.log(rpcHost)
 
 const connection = new anchor.web3.Connection(
-  rpcHost ? rpcHost : anchor.web3.clusterApiUrl('testnet')
+  rpcHost ? rpcHost : anchor.web3.clusterApiUrl('devnet')
 );
 console.log(connection)
 const App = () => {
