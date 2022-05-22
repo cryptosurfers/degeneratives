@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
-import { CandyMachineAccount } from './candy-machine';
+import { CandyMachineAccount } from '../lib/candy-machine';
 import { CircularProgress } from '@material-ui/core';
 import { GatewayStatus, useGateway } from '@civic/solana-gateway-react';
 import { useEffect, useState, useRef } from 'react';
@@ -11,16 +11,36 @@ import {
   onGatewayTokenChange,
   removeAccountChangeListener,
 } from '@identity.com/solana-gateway-ts';
+import mintButtonImg from '../assets/background/mint.png';
+import mintHover from '../assets/background/mintHover.png';
 
 export const CTAButton = styled(Button)`
-  width: 100%;
-  height: 60px;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  background: linear-gradient(180deg, #604ae5 0%, #813eee 100%);
+  width: 310px;
+  height: 150px;
+  cursor: pointer;
+  background: url(${mintButtonImg}) no-repeat;
+  background-size: cover;
   color: white;
-  font-size: 16px;
-  font-weight: bold;
+  box-shadow: none;
+  overflow: visible;
+  &:hover:before {
+    z-index: 0;
+    content: '';
+    display: block;
+    background: url(${mintHover}) no-repeat;
+    background-size: cover;
+    box-shadow: none;
+    width: 420px;
+    height: 240px;
+    position: absolute;
+    top: -45px;
+    right: -60px;
+  }
+
+  &:hover {
+    box-shadow: none;
+    background-color: transparent;
+  }
 `; // add your own styles here
 
 export const MintButton = ({
@@ -52,17 +72,17 @@ export const MintButton = ({
       candyMachine?.state.isPresale ||
       candyMachine?.state.isWhitelistOnly
     ) {
-      return 'WHITELIST MINT';
+      return '';
     }
 
-    return 'MINT';
+    return '';
   };
 
   useEffect(() => {
     const mint = async () => {
       await removeAccountChangeListener(
         connection.connection,
-        webSocketSubscriptionId,
+        webSocketSubscriptionId
       );
       await onMint();
 
@@ -88,8 +108,8 @@ export const MintButton = ({
     ];
     const invalidToStates = [...fromStates, GatewayStatus.UNKNOWN];
     if (
-      fromStates.find(state => previousGatewayStatus === state) &&
-      !invalidToStates.find(state => gatewayStatus === state)
+      fromStates.find((state) => previousGatewayStatus === state) &&
+      !invalidToStates.find((state) => gatewayStatus === state)
     ) {
       setIsMinting(true);
     }
@@ -119,7 +139,7 @@ export const MintButton = ({
             const gatewayToken = await findGatewayToken(
               connection.connection,
               wallet.publicKey!,
-              candyMachine.state.gatekeeper.gatekeeperNetwork,
+              candyMachine.state.gatekeeper.gatekeeperNetwork
             );
 
             if (gatewayToken?.isValid()) {
@@ -127,13 +147,13 @@ export const MintButton = ({
             } else {
               window.open(
                 `https://verify.encore.fans/?gkNetwork=${network}`,
-                '_blank',
+                '_blank'
               );
 
               const gatewayTokenAddress =
                 await getGatewayTokenAddressForOwnerAndGatekeeperNetwork(
                   wallet.publicKey!,
-                  candyMachine.state.gatekeeper.gatekeeperNetwork,
+                  candyMachine.state.gatekeeper.gatekeeperNetwork
                 );
 
               setWebSocketSubscriptionId(
@@ -141,8 +161,8 @@ export const MintButton = ({
                   connection.connection,
                   gatewayTokenAddress,
                   () => setVerified(true),
-                  'confirmed',
-                ),
+                  'confirmed'
+                )
               );
             }
           } else {

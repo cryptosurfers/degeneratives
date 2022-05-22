@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme: Theme) =>
         alignContent: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#384457',
-        color: 'white',
+        background: '#fff',
+
         borderRadius: 5,
         fontSize: 10,
       },
@@ -32,8 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignContent: 'center',
       alignItems: 'center',
       justifyContent: 'center',
-      background: '#384457',
-      color: 'white',
+      background: '#fff',
       borderRadius: 5,
       fontWeight: 'bold',
       fontSize: 18,
@@ -42,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 'bold',
       fontSize: 18,
     },
-  }),
+  })
 );
 
 interface MintCountdownProps {
