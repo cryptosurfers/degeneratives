@@ -12,6 +12,7 @@ import {
   removeAccountChangeListener,
 } from '@identity.com/solana-gateway-ts';
 import mintButtonImg from '../assets/background/mint.png';
+import mintHover from '../assets/background/mintHover.png';
 
 export const CTAButton = styled(Button)`
   width: 310px;
@@ -21,6 +22,25 @@ export const CTAButton = styled(Button)`
   background-size: cover;
   color: white;
   box-shadow: none;
+  overflow: visible;
+  &:hover:before {
+    z-index: 0;
+    content: '';
+    display: block;
+    background: url(${mintHover}) no-repeat;
+    background-size: cover;
+    box-shadow: none;
+    width: 420px;
+    height: 240px;
+    position: absolute;
+    top: -45px;
+    right: -60px;
+  }
+
+  &:hover {
+    box-shadow: none;
+    background-color: transparent;
+  }
 `; // add your own styles here
 
 export const MintButton = ({
