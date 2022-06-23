@@ -38,11 +38,13 @@ import logo from '../assets/background/logo.png';
 import connectButton from '../assets/background/connect.png';
 
 const ConnectButton = styled(Button)`
-  width: 470px;
-  height: 110px;
+  max-width: 470px;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
   background: url(${connectButton}) no-repeat;
-  background-size: cover;
+  background-size: 90% 90%;
+
   color: white;
   box-shadow: none;
 `;
@@ -494,13 +496,20 @@ const Home = (props: HomeProps) => {
         alignItems: 'center',
       }}
     >
-      <img src={logo} alt="logo" style={{ maxWidth: '350px' }}></img>
+      <img
+        src={logo}
+        alt="logo"
+        style={{ maxWidth: '350px', marginTop: '20px' }}
+      ></img>
       <Container
         maxWidth="xs"
         style={{
+          marginTop: '40px',
+          height: '120px',
+          flexDirection: 'column',
           position: 'relative',
           display: 'flex',
-          flexDirection: 'column',
+
           alignItems: 'center',
         }}
       >
@@ -732,17 +741,6 @@ const Home = (props: HomeProps) => {
           </>
         )}
       </Container>
-      <Button
-        style={{ color: 'black' }}
-        variant="text"
-        onClick={async () => {
-          console.log('dc', wallet);
-          console.log('cluster', props.connection);
-          wallet.disconnect();
-        }}
-      >
-        DC
-      </Button>
 
       <Snackbar
         open={alertState.open}
