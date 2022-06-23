@@ -3,7 +3,6 @@ import * as anchor from '@project-serum/anchor';
 
 import styled from 'styled-components';
 import { Button, Container, makeStyles, Snackbar } from '@material-ui/core';
-import Paper from '@material-ui/core/Paper';
 import Alert from '@material-ui/lab/Alert';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';

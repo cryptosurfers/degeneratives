@@ -13,6 +13,7 @@ import {
 } from '@identity.com/solana-gateway-ts';
 import mintButtonImg from '../assets/background/mint.png';
 import mintHover from '../assets/background/mintHover.png';
+import { CircularHeart } from './CircularHeart';
 
 export const CTAButton = styled(Button)`
   width: 310px;
@@ -67,7 +68,7 @@ export const MintButton = ({
     if (candyMachine?.state.isSoldOut) {
       return 'SOLD OUT';
     } else if (isMinting) {
-      return <CircularProgress />;
+      return <CircularHeart />;
     } else if (
       candyMachine?.state.isPresale ||
       candyMachine?.state.isWhitelistOnly

@@ -25,6 +25,9 @@ const theme = createTheme({
   palette: {
     type: 'dark',
   },
+  typography: {
+    fontFamily: ['Coming Soon', 'cursive'].join(','),
+  },
 });
 
 const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
@@ -43,12 +46,12 @@ const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
 const candyMachineId = getCandyMachineId();
 const network = process.env.REACT_APP_SOLANA_NETWORK as WalletAdapterNetwork;
 const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST!;
-console.log(rpcHost)
+console.log(rpcHost);
 
 const connection = new anchor.web3.Connection(
   rpcHost ? rpcHost : anchor.web3.clusterApiUrl('devnet')
 );
-console.log(connection)
+console.log(connection);
 const App = () => {
   const endpoint = useMemo(() => clusterApiUrl(network), []);
 
