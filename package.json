@@ -1,6 +1,6 @@
 {
   "name": "degenerative-candy-machine",
-  "homepage": "https://app.degenerative.space/",
+  "homepage": "https://app.degenerative.space",
   "version": "0.2.0",
   "private": true,
   "dependencies": {
