@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.8db26da1.chunk.css",
-    "main.js": "/static/js/main.75ff39a2.chunk.js",
-    "main.js.map": "/static/js/main.75ff39a2.chunk.js.map",
+    "main.js": "/static/js/main.bd4e5f9d.chunk.js",
+    "main.js.map": "/static/js/main.bd4e5f9d.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.3e21b5b4.js",
     "runtime-main.js.map": "/static/js/runtime-main.3e21b5b4.js.map",
     "static/js/2.b2939edb.chunk.js": "/static/js/2.b2939edb.chunk.js",
@@ -11,6 +11,7 @@
     "static/css/main.8db26da1.chunk.css.map": "/static/css/main.8db26da1.chunk.css.map",
     "static/js/2.b2939edb.chunk.js.LICENSE.txt": "/static/js/2.b2939edb.chunk.js.LICENSE.txt",
     "static/media/index.css": "/static/media/lightnings.e04d37bc.png",
+    "static/media/logo.5dbcc223.png": "/static/media/logo.5dbcc223.png",
     "static/media/mint.fbb16e24.png": "/static/media/mint.fbb16e24.png",
     "static/media/mintHover.1661f12b.png": "/static/media/mintHover.1661f12b.png"
   },
@@ -18,6 +19,6 @@
     "static/js/runtime-main.3e21b5b4.js",
     "static/js/2.b2939edb.chunk.js",
     "static/css/main.8db26da1.chunk.css",
-    "static/js/main.75ff39a2.chunk.js"
+    "static/js/main.bd4e5f9d.chunk.js"
   ]
 }
